@@ -1,0 +1,85 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "ProyectoMFEContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": "DataAccess",
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "ApiProyecto",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[CATEGORIAS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[DISPOSITIVOS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HISTORICO_SOLICITUDES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[HW_RED]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ORDENADORES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[PANTALLAS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SOLICITUDES]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[USUARIOS]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ACEPTAR_SOLICITUD]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[FINALIZAR_SOLICITUD]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[INSERTAR_SOLICITUD]",
+         "ObjectType": 1
+      },
+      {
+         "Name": "[dbo].[RECHAZAR_SOLICITUD]",
+         "ObjectType": 1
+      }
+   ],
+   "UiHint": "desktop-ipvoivv\\sqlexpress.ProyectoMFE.dbo",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
