@@ -3,13 +3,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace ApiProyecto.Models
+namespace ProyectoMFE.Models
 {
-    public partial class Pantallas
+    public partial class Solicitudes
     {
         public string NumSerie { get; set; }
-        public int Pulgadas { get; set; }
+        public int IdUsuario { get; set; }
+        public string Estado { get; set; }
 
+        public virtual Usuarios IdUsuarioNavigation { get; set; }
         public virtual Dispositivos NumSerieNavigation { get; set; }
     }
 }

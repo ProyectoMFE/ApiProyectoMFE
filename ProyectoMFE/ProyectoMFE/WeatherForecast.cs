@@ -1,4 +1,4 @@
-namespace ApiProyecto
+namespace ProyectoMFE
 {
     public class WeatherForecast
     {

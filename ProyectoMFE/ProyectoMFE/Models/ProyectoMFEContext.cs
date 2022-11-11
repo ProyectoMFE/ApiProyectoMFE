@@ -4,9 +4,8 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ApiProyecto.Models;
 
-namespace ApiProyecto.DataAccess
+namespace ProyectoMFE.Models
 {
     public partial class ProyectoMFEContext : DbContext
     {
@@ -219,7 +218,7 @@ namespace ApiProyecto.DataAccess
 
                 entity.ToTable("USUARIOS");
 
-                entity.HasIndex(e => e.Correo, "UQ__USUARIOS__264F33C8BC714F5F")
+                entity.HasIndex(e => e.Correo, "UQ__USUARIOS__264F33C8D152A755")
                     .IsUnique();
 
                 entity.Property(e => e.IdUsuario).HasColumnName("ID_USUARIO");

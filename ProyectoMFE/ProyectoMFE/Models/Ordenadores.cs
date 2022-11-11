@@ -3,15 +3,16 @@
 using System;
 using System.Collections.Generic;
 
-namespace ApiProyecto.Models
+namespace ProyectoMFE.Models
 {
-    public partial class Solicitudes
+    public partial class Ordenadores
     {
         public string NumSerie { get; set; }
-        public int IdUsuario { get; set; }
-        public string Estado { get; set; }
+        public string Procesador { get; set; }
+        public string Ram { get; set; }
+        public string DiscoPrincipal { get; set; }
+        public string DiscoSecundario { get; set; }
 
-        public virtual Usuarios IdUsuarioNavigation { get; set; }
         public virtual Dispositivos NumSerieNavigation { get; set; }
     }
 }

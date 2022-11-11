@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ApiProyecto.Models
+namespace ProyectoMFE.Models
 {
     public partial class Categorias
     {

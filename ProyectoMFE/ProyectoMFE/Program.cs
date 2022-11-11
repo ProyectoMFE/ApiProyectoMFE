@@ -1,18 +1,12 @@
-// 1. AÑADIR LOS USING
 using Microsoft.EntityFrameworkCore;
-using ApiProyecto.DataAccess;
+using ProyectoMFE.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
+const string CONNECTIONNAME = "ProyectoMFE";
+var connectionString = builder.Configuration.GetConnectionString(CONNECTIONNAME);
 
-// 2. Conexion con la BD
-const string CONEXIONBD = "ProyectoMFE";
-var conexionString = builder.Configuration.GetConnectionString(CONEXIONBD);
-
-// 3. Añadir Context
-builder.Services.AddDbContext<ProyectoMFEContext>(options =>options.UseSqlServer(conexionString));
-
-
+builder.Services.AddDbContext<ProyectoMFEContext>(options => options.UseSqlServer(connectionString));
 
 // Add services to the container.
 
