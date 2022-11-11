@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ProyectoMFE.Models
+namespace ApiProyecto.DataAccess
 {
     public static class DbContextExtensions
     {

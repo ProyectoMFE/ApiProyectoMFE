@@ -6,10 +6,10 @@
    "FilterSchemas": false,
    "IncludeConnectionString": false,
    "ModelNamespace": null,
-   "OutputContextPath": null,
+   "OutputContextPath": "DataAccess",
    "OutputPath": "Models",
    "PreserveCasingWithRegex": true,
-   "ProjectRootNamespace": "ProyectoMFE",
+   "ProjectRootNamespace": "ApiProyecto",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
    "SelectedToBeGenerated": 0,
@@ -63,7 +63,7 @@
          "ObjectType": 1
       }
    ],
-   "UiHint": "desktop-a57fhve\\sqlexpress.ProyectoMFE.dbo",
+   "UiHint": "desktop-ipvoivv\\sqlexpress.ProyectoMFE.dbo",
    "UseBoolPropertiesWithoutDefaultSql": false,
    "UseDatabaseNames": false,
    "UseDbContextSplitting": false,

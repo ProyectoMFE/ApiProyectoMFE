@@ -3,13 +3,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProyectoMFE.Models
+namespace ApiProyecto.Models
 {
-    public partial class HwRed
+    public partial class Ordenadores
     {
         public string NumSerie { get; set; }
-        public int NumPuertos { get; set; }
-        public int Velocidad { get; set; }
+        public string Procesador { get; set; }
+        public string Ram { get; set; }
+        public string DiscoPrincipal { get; set; }
+        public string DiscoSecundario { get; set; }
 
         public virtual Dispositivos NumSerieNavigation { get; set; }
     }

@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProyectoMFE.Models
+namespace ApiProyecto.Models
 {
     public partial class Dispositivos
     {

@@ -3,13 +3,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace ProyectoMFE.Models
+namespace ApiProyecto.Models
 {
-    public partial class HistoricoSolicitudes
+    public partial class HwRed
     {
         public string NumSerie { get; set; }
-        public int IdUsuario { get; set; }
-        public DateTime Fecha { get; set; }
-        public string Ultimatum { get; set; }
+        public int NumPuertos { get; set; }
+        public int Velocidad { get; set; }
+
+        public virtual Dispositivos NumSerieNavigation { get; set; }
     }
 }
