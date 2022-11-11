@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiProyecto.DataAccess;
 using ApiProyecto.Models;
+using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace ApiProyecto.Controllers
 {
@@ -45,30 +47,18 @@ namespace ApiProyecto.Controllers
         // PUT: api/Solicitudes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSolicitudes(string id, Solicitudes solicitudes)
+        public async Task<IActionResult> PutSolicitudes(string id, string correo, Solicitudes solicitudes)
         {
             if (id != solicitudes.NumSerie)
             {
                 return BadRequest();
             }
 
-            _context.Entry(solicitudes).State = EntityState.Modified;
+            string json = await new StreamReader(Request.Body).ReadToEndAsync();
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SolicitudesExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            //Solicitudes.Autor Autor = JsonConvert.DeserializeObject<AccesoDatos.Autor>(json);
+
+            var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.INSERTAR_SOLICITUD @correo={0}, @num_dispositivo={1}", id, correo);
 
             return NoContent();
         }
@@ -76,24 +66,11 @@ namespace ApiProyecto.Controllers
         // POST: api/Solicitudes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Solicitudes>> PostSolicitudes(Solicitudes solicitudes)
+        public async Task<ActionResult<Solicitudes>> PostSolicitudes(string id, string correo, Solicitudes solicitudes)
         {
-            _context.Solicitudes.Add(solicitudes);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (SolicitudesExists(solicitudes.NumSerie))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            //HttpContext.Request.Body.Seek(0, SeekOrigin.Begin);
+
+            var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.INSERTAR_SOLICITUD @correo={0}, @num_dispositivo={1}", id, correo);
 
             return CreatedAtAction("GetSolicitudes", new { id = solicitudes.NumSerie }, solicitudes);
         }
