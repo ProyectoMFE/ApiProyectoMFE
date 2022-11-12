@@ -76,7 +76,7 @@ namespace ApiProyecto.Controllers
         // POST: api/Solicitudes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Solicitudes>> PostSolicitudes(string numSerie, string correo)
+        public async Task<ActionResult> PostSolicitudes(string numSerie, string correo)
         {
             SqlConnection conexion = (SqlConnection) _context.Database.GetDbConnection();
             SqlCommand comando = conexion.CreateCommand();
