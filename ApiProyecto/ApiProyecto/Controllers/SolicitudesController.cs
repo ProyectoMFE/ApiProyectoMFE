@@ -50,16 +50,27 @@ namespace ApiProyecto.Controllers
         [HttpPut()]
         public async Task<IActionResult> PutSolicitudes(string numSerie, string correo, char action)
         {
-            if (action == 'A')
+            SqlConnection conexion = (SqlConnection)_context.Database.GetDbConnection();
+            SqlCommand comando = conexion.CreateCommand();
+
+            conexion.Open();
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+
+            if (action == 'R')
             {
-                var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.ACEPTAR_SOLICITUD @correo={0}, @num_dispositivo={1}", correo, numSerie).ToList();
+                comando.CommandText = "RECHAZAR_SOLICITUD";
             }
             else if (action == 'A')
             {
-                var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.RECHAZAR_SOLICITUD @correo={0}, @num_dispositivo={1}", correo, numSerie).ToList();
+                comando.CommandText = "ACEPTAR_SOLICITUD";
             }
 
-            return CreatedAtAction("GetOrdenadores", "si");
+            comando.Parameters.Add("@correo", System.Data.SqlDbType.VarChar, 30).Value = correo;
+            comando.Parameters.Add("@num_dispositivo", System.Data.SqlDbType.VarChar, 20).Value = numSerie;
+
+            comando.ExecuteReader();
+
+            return NoContent();
         }
 
         // POST: api/Solicitudes
@@ -67,7 +78,19 @@ namespace ApiProyecto.Controllers
         [HttpPost]
         public async Task<ActionResult<Solicitudes>> PostSolicitudes(string numSerie, string correo)
         {
-            var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.INSERTAR_SOLICITUD @correo={0}, @num_dispositivo={1}", correo, numSerie).ToList();
+            SqlConnection conexion = (SqlConnection) _context.Database.GetDbConnection();
+            SqlCommand comando = conexion.CreateCommand();
+
+            conexion.Open();
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.CommandText = "INSERTAR_SOLICITUD";
+
+            comando.Parameters.Add("@correo", System.Data.SqlDbType.VarChar, 30).Value = correo;
+            comando.Parameters.Add("@num_dispositivo", System.Data.SqlDbType.VarChar, 20).Value = numSerie;
+
+            comando.ExecuteReader();
+
+            conexion.Close();
 
             return NoContent();
         }
@@ -76,7 +99,17 @@ namespace ApiProyecto.Controllers
         [HttpDelete()]
         public async Task<IActionResult> DeleteSolicitudes(string numSerie, string correo)
         {
-            var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.FINALIZAR_SOLICITUD @correo={0}, @num_dispositivo={1}", correo, numSerie).ToList();
+            SqlConnection conexion = (SqlConnection)_context.Database.GetDbConnection();
+            SqlCommand comando = conexion.CreateCommand();
+
+            conexion.Open();
+            comando.CommandType = System.Data.CommandType.StoredProcedure;
+            comando.CommandText = "FINALIZAR_SOLICITUD";
+
+            comando.Parameters.Add("@correo", System.Data.SqlDbType.VarChar, 30).Value = correo;
+            comando.Parameters.Add("@num_dispositivo", System.Data.SqlDbType.VarChar, 20).Value = numSerie;
+
+            comando.ExecuteReader();
 
             return NoContent();
         }
