@@ -9,6 +9,7 @@ using ApiProyecto.DataAccess;
 using ApiProyecto.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
+using Microsoft.Data.SqlClient;
 
 namespace ApiProyecto.Controllers
 {
@@ -46,47 +47,36 @@ namespace ApiProyecto.Controllers
 
         // PUT: api/Solicitudes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSolicitudes(string id, string correo, Solicitudes solicitudes)
+        [HttpPut()]
+        public async Task<IActionResult> PutSolicitudes(string numSerie, string correo, char action)
         {
-            if (id != solicitudes.NumSerie)
+            if (action == 'A')
             {
-                return BadRequest();
+                var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.ACEPTAR_SOLICITUD @correo={0}, @num_dispositivo={1}", correo, numSerie).ToList();
+            }
+            else if (action == 'A')
+            {
+                var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.RECHAZAR_SOLICITUD @correo={0}, @num_dispositivo={1}", correo, numSerie).ToList();
             }
 
-            string json = await new StreamReader(Request.Body).ReadToEndAsync();
-
-            //Solicitudes.Autor Autor = JsonConvert.DeserializeObject<AccesoDatos.Autor>(json);
-
-            var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.INSERTAR_SOLICITUD @correo={0}, @num_dispositivo={1}", id, correo);
-
-            return NoContent();
+            return CreatedAtAction("GetOrdenadores", "si");
         }
 
         // POST: api/Solicitudes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Solicitudes>> PostSolicitudes(string id, string correo, Solicitudes solicitudes)
+        public async Task<ActionResult<Solicitudes>> PostSolicitudes(string numSerie, string correo)
         {
-            //HttpContext.Request.Body.Seek(0, SeekOrigin.Begin);
+            var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.INSERTAR_SOLICITUD @correo={0}, @num_dispositivo={1}", correo, numSerie).ToList();
 
-            var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.INSERTAR_SOLICITUD @correo={0}, @num_dispositivo={1}", id, correo);
-
-            return CreatedAtAction("GetSolicitudes", new { id = solicitudes.NumSerie }, solicitudes);
+            return NoContent();
         }
 
         // DELETE: api/Solicitudes/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSolicitudes(string id)
+        [HttpDelete()]
+        public async Task<IActionResult> DeleteSolicitudes(string numSerie, string correo)
         {
-            var solicitudes = await _context.Solicitudes.FindAsync(id);
-            if (solicitudes == null)
-            {
-                return NotFound();
-            }
-
-            _context.Solicitudes.Remove(solicitudes);
-            await _context.SaveChangesAsync();
+            var baseItem = _context.Solicitudes.FromSqlRaw("Execute dbo.FINALIZAR_SOLICITUD @correo={0}, @num_dispositivo={1}", correo, numSerie).ToList();
 
             return NoContent();
         }
