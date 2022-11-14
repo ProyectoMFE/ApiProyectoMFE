@@ -31,20 +31,6 @@ namespace ApiProyecto.Controllers
             return await _context.Solicitudes.ToListAsync();
         }
 
-        // GET: api/Solicitudes/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Solicitudes>> GetSolicitudes(string id)
-        {
-            var solicitudes = await _context.Solicitudes.FindAsync(id);
-
-            if (solicitudes == null)
-            {
-                return NotFound();
-            }
-
-            return solicitudes;
-        }
-
         // PUT: api/Solicitudes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut()]
