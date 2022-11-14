@@ -64,13 +64,17 @@ namespace ApiProyecto.Controllers
             {
                 comando.CommandText = "ACEPTAR_SOLICITUD";
             }
+            else
+            {
+                return NotFound("Accion inválida");
+            }
 
             comando.Parameters.Add("@correo", System.Data.SqlDbType.VarChar, 30).Value = correo;
             comando.Parameters.Add("@num_dispositivo", System.Data.SqlDbType.VarChar, 20).Value = numSerie;
 
             comando.ExecuteReader();
 
-            return NoContent();
+            return Ok("Modificado");
         }
 
         // POST: api/Solicitudes
@@ -92,7 +96,7 @@ namespace ApiProyecto.Controllers
 
             conexion.Close();
 
-            return NoContent();
+            return Ok("Insertado");
         }
 
         // DELETE: api/Solicitudes/5
@@ -111,7 +115,7 @@ namespace ApiProyecto.Controllers
 
             comando.ExecuteReader();
 
-            return NoContent();
+            return Ok("Eliminado");
         }
 
         private bool SolicitudesExists(string id)
