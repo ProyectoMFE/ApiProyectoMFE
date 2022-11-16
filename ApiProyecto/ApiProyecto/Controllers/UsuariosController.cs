@@ -29,10 +29,10 @@ namespace ApiProyecto.Controllers
         }
 
         // GET: api/Usuarios/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Usuarios>> GetUsuarios(int id)
+        [HttpGet("{correo}")]
+        public async Task<ActionResult<Usuarios>> GetUsuariosCorreo(string correo)
         {
-            var usuarios = await _context.Usuarios.FindAsync(id);
+            var usuarios = _context.Usuarios.FirstOrDefault(f => f.Correo == correo);
 
             if (usuarios == null)
             {
@@ -41,20 +41,6 @@ namespace ApiProyecto.Controllers
 
             return usuarios;
         }
-
-        // GET: api/Usuarios/5
-        /*[HttpGet("{correo}")]
-        public async Task<ActionResult<Usuarios>> GetUsuariosCorreo(string correo)
-        {
-            var usuarios = await _context.Usuarios.FindAsync(correo);
-
-            if (usuarios == null)
-            {
-                return NotFound();
-            }
-
-            return usuarios;
-        }*/
 
         // PUT: api/Usuarios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
