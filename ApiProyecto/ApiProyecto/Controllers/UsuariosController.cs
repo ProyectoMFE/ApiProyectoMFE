@@ -42,6 +42,20 @@ namespace ApiProyecto.Controllers
             return usuarios;
         }
 
+        // GET: api/Usuarios/5
+        /*[HttpGet("{correo}")]
+        public async Task<ActionResult<Usuarios>> GetUsuariosCorreo(string correo)
+        {
+            var usuarios = await _context.Usuarios.FindAsync(correo);
+
+            if (usuarios == null)
+            {
+                return NotFound();
+            }
+
+            return usuarios;
+        }*/
+
         // PUT: api/Usuarios/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
