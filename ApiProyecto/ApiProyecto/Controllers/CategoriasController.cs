@@ -28,7 +28,7 @@ namespace ApiProyecto.Controllers
             return await _context.Categorias.ToListAsync();
         }
 
-        // GET: api/Categorias/5
+        /*// GET: api/Categorias/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Categorias>> GetCategorias(int id)
         {
@@ -40,14 +40,14 @@ namespace ApiProyecto.Controllers
             }
 
             return categorias;
-        }
+        }*/
 
         // PUT: api/Categorias/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategorias(int id, Categorias categorias)
+        [HttpPut("{categoria}")]
+        public async Task<IActionResult> PutCategorias(string categoria, Categorias categorias)
         {
-            if (id != categorias.IdCategoria)
+            if (categoria != categorias.Nombre)
             {
                 return BadRequest();
             }
@@ -60,7 +60,7 @@ namespace ApiProyecto.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CategoriasExists(id))
+                if (!CategoriasExists(categorias.IdCategoria))
                 {
                     return NotFound();
                 }
@@ -85,10 +85,10 @@ namespace ApiProyecto.Controllers
         }
 
         // DELETE: api/Categorias/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategorias(int id)
+        [HttpDelete("{categoria}")]
+        public async Task<IActionResult> DeleteCategorias(string categoria)
         {
-            var categorias = await _context.Categorias.FindAsync(id);
+            var categorias = _context.Categorias.FirstOrDefault(f => f.Nombre == categoria);
             if (categorias == null)
             {
                 return NotFound();

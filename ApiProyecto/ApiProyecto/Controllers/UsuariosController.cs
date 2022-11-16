@@ -43,11 +43,10 @@ namespace ApiProyecto.Controllers
         }
 
         // PUT: api/Usuarios/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuarios(int id, Usuarios usuarios)
+        [HttpPut("{correo}")]
+        public async Task<IActionResult> PutUsuarios(string correo, Usuarios usuarios)
         {
-            if (id != usuarios.IdUsuario)
+            if (correo != usuarios.Correo)
             {
                 return BadRequest();
             }
@@ -60,7 +59,7 @@ namespace ApiProyecto.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsuariosExists(id))
+                if (!UsuariosExists(usuarios.IdUsuario))
                 {
                     return NotFound();
                 }
@@ -85,10 +84,11 @@ namespace ApiProyecto.Controllers
         }
 
         // DELETE: api/Usuarios/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuarios(int id)
+        [HttpDelete("{correo}")]
+        public async Task<IActionResult> DeleteUsuarios(string correo)
         {
-            var usuarios = await _context.Usuarios.FindAsync(id);
+            var usuarios = _context.Usuarios.FirstOrDefault(f => f.Correo == correo);
+
             if (usuarios == null)
             {
                 return NotFound();
