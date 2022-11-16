@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiProyecto.DataAccess;
 using ApiProyecto.Models;
+using ApiProyecto.Controllers;
 
 namespace ApiProyecto.Controllers
 {
@@ -21,14 +22,49 @@ namespace ApiProyecto.Controllers
             _context = context;
         }
 
-        // GET: api/Dispositivos
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="marca"></param>
+        /// <param name="estado"></param>
+        /// <param name="localizacion"></param>
+        /// <param name="categoria"></param>
+        /// <param name="modelo"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Dispositivos>>> GetDispositivos()
+        public async Task<ActionResult<IEnumerable<Dispositivos>>> GetDispositivosLista(string? marca, string? estado, string? localizacion, string? categoria, string? modelo)
         {
-            return await _context.Dispositivos.ToListAsync();
+            List<Dispositivos> dispositivos;
+
+            if (marca != null)
+            {
+                dispositivos = _context.Dispositivos.Where(f => f.Marca == marca).ToList();
+                
+            } else if (estado != null)
+            {
+                dispositivos = _context.Dispositivos.Where(f => f.Estado == estado).ToList();
+            } else if (localizacion != null)
+            {
+                dispositivos = _context.Dispositivos.Where(f => f.Localizacion == localizacion).ToList();
+            } else if (categoria != null)
+            {
+                dispositivos = _context.Dispositivos.Where(f => f.IdCategoriaNavigation.Nombre == categoria).ToList();
+            } else if (modelo != null)
+            {
+                dispositivos = _context.Dispositivos.Where(f => f.Modelo == modelo).ToList();
+            } else
+            {
+                return await _context.Dispositivos.ToListAsync();
+            }
+
+            return dispositivos;
         }
 
-        // GET: api/Dispositivos/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Dispositivos>> GetDispositivos(string id)
         {
@@ -42,8 +78,12 @@ namespace ApiProyecto.Controllers
             return dispositivos;
         }
 
-        // PUT: api/Dispositivos/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dispositivos"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDispositivos(string id, Dispositivos dispositivos)
         {
@@ -73,8 +113,11 @@ namespace ApiProyecto.Controllers
             return NoContent();
         }
 
-        // POST: api/Dispositivos
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dispositivos"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Dispositivos>> PostDispositivos(Dispositivos dispositivos)
         {
@@ -98,7 +141,11 @@ namespace ApiProyecto.Controllers
             return CreatedAtAction("GetDispositivos", new { id = dispositivos.NumSerie }, dispositivos);
         }
 
-        // DELETE: api/Dispositivos/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDispositivos(string id)
         {

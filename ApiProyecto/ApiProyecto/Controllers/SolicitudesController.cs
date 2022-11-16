@@ -10,6 +10,7 @@ using ApiProyecto.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
 using Microsoft.Data.SqlClient;
+using NuGet.DependencyResolver;
 
 namespace ApiProyecto.Controllers
 {
@@ -24,15 +25,39 @@ namespace ApiProyecto.Controllers
             _context = context;
         }
 
-        // GET: api/Solicitudes
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numSerie"></param>
+        /// <param name="correo"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Solicitudes>>> GetSolicitudes()
+        public async Task<ActionResult<IEnumerable<Solicitudes>>> GetSolicitudes(string? numSerie, string? correo)
         {
-            return await _context.Solicitudes.ToListAsync();
+            List<Solicitudes> solicitudes;
+
+            if (numSerie != null)
+            {
+                solicitudes = _context.Solicitudes.Where(f => f.NumSerie == numSerie).ToList();
+            } else if (correo != null)
+            {
+                solicitudes = _context.Solicitudes.Where(x => x.IdUsuarioNavigation.Correo==correo).ToList();
+            }
+            else
+            {
+                return await _context.Solicitudes.ToListAsync();
+            }
+
+            return solicitudes;
         }
 
-        // PUT: api/Solicitudes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numSerie"></param>
+        /// <param name="correo"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
         [HttpPut()]
         public async Task<IActionResult> PutSolicitudes(string numSerie, string correo, char action)
         {
@@ -63,8 +88,12 @@ namespace ApiProyecto.Controllers
             return Ok("Modificado");
         }
 
-        // POST: api/Solicitudes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numSerie"></param>
+        /// <param name="correo"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> PostSolicitudes(string numSerie, string correo)
         {
@@ -85,7 +114,12 @@ namespace ApiProyecto.Controllers
             return Ok("Insertado");
         }
 
-        // DELETE: api/Solicitudes/5
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numSerie"></param>
+        /// <param name="correo"></param>
+        /// <returns></returns>
         [HttpDelete()]
         public async Task<IActionResult> DeleteSolicitudes(string numSerie, string correo)
         {
