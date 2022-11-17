@@ -28,7 +28,7 @@ namespace ApiProyecto.Controllers
             return await _context.Categorias.ToListAsync();
         }
 
-        /*// GET: api/Categorias/5
+        // GET: api/Categorias/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Categorias>> GetCategorias(int id)
         {
@@ -40,7 +40,7 @@ namespace ApiProyecto.Controllers
             }
 
             return categorias;
-        }*/
+        }
 
         // PUT: api/Categorias/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
