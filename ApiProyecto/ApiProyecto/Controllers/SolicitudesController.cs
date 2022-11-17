@@ -26,11 +26,11 @@ namespace ApiProyecto.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Lista las solicitudes que hay en la base de datos.
         /// </summary>
-        /// <param name="numSerie"></param>
-        /// <param name="correo"></param>
-        /// <returns></returns>
+        /// <param name="numSerie">Con esta opción puedes filtrar por número de serie.</param>
+        /// <param name="correo">Con esta opción`puedes filtrar por correo.</param>
+        /// <returns>Un lista con las solicitudes.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Solicitudes>>> GetSolicitudes(string? numSerie, string? correo)
         {
@@ -52,12 +52,12 @@ namespace ApiProyecto.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Acepta o rechaza las solicitides.
         /// </summary>
-        /// <param name="numSerie"></param>
-        /// <param name="correo"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
+        /// <param name="numSerie">El número de serie.</param>
+        /// <param name="correo">El correo del usuario.</param>
+        /// <param name="action">R: Rechazas la solicitud, A: Aceptas la solicitud.</param>
+        /// <returns>Respuesta HTTP.</returns>
         [HttpPut()]
         public async Task<IActionResult> PutSolicitudes(string numSerie, string correo, char action)
         {
@@ -83,17 +83,26 @@ namespace ApiProyecto.Controllers
             comando.Parameters.Add("@correo", System.Data.SqlDbType.VarChar, 30).Value = correo;
             comando.Parameters.Add("@num_dispositivo", System.Data.SqlDbType.VarChar, 20).Value = numSerie;
 
-            comando.ExecuteReader();
-
-            return Ok("Modificado");
+            try 
+            {
+                comando.ExecuteReader();
+                return Ok("Modificado");
+            } catch (Exception) 
+            {
+                return NotFound("No se pudo modificar la solicitud, quizá no exista");
+            }
+            finally
+            {
+                conexion.Close();
+            }  
         }
 
         /// <summary>
-        /// 
+        /// Inserta una solicitud.
         /// </summary>
-        /// <param name="numSerie"></param>
-        /// <param name="correo"></param>
-        /// <returns></returns>
+        /// <param name="numSerie">El número de serie.</param>
+        /// <param name="correo">El correo del usuario.</param>
+        /// <returns>Respuesta HTTP.</returns>
         [HttpPost]
         public async Task<ActionResult> PostSolicitudes(string numSerie, string correo)
         {
@@ -109,17 +118,27 @@ namespace ApiProyecto.Controllers
 
             comando.ExecuteReader();
 
-            conexion.Close();
-
-            return Ok("Insertado");
+            try
+            {
+                comando.ExecuteReader();
+                return Ok("Insertado");
+            }
+            catch (Exception)
+            {
+                return NotFound("No se pudo insertar la solicitud, quizá ya exista");
+            }
+            finally
+            {
+                conexion.Close();
+            }
         }
 
         /// <summary>
-        /// 
+        /// Finaliza una solicitud que fué aceptada.
         /// </summary>
-        /// <param name="numSerie"></param>
-        /// <param name="correo"></param>
-        /// <returns></returns>
+        /// <param name="numSerie">El número de serie.</param>
+        /// <param name="correo">El correo del usuario.</param>
+        /// <returns>Respuesta HTTP.</returns>
         [HttpDelete()]
         public async Task<IActionResult> DeleteSolicitudes(string numSerie, string correo)
         {
@@ -135,7 +154,19 @@ namespace ApiProyecto.Controllers
 
             comando.ExecuteReader();
 
-            return Ok("Eliminado");
+            try
+            {
+                comando.ExecuteReader();
+                return Ok("Eliminado");
+            }
+            catch (Exception)
+            {
+                return NotFound("No se pudo insertar la solicitud, quizá no exista");
+            }
+            finally
+            {
+                conexion.Close();
+            }
         }
 
         private bool SolicitudesExists(string id)
