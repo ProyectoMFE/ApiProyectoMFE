@@ -29,10 +29,10 @@ namespace ApiProyecto.Controllers
         }
 
         // GET: api/Usuarios/5
-        [HttpGet("{correo}")]
-        public async Task<ActionResult<Usuarios>> GetUsuariosCorreo(string correo)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Usuarios>> GetUsuariosCorreo(int id)
         {
-            var usuarios = _context.Usuarios.FirstOrDefault(f => f.Correo == correo);
+            var usuarios = await _context.Usuarios.FindAsync(id);
 
             if (usuarios == null)
             {
