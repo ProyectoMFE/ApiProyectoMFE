@@ -29,23 +29,23 @@ namespace ApiProyecto.Controllers
         /// Lista las solicitudes que hay en la base de datos.
         /// </summary>
         /// <param name="numSerie">Con esta opción puedes filtrar por número de serie.</param>
-        /// <param name="correo">Con esta opción`puedes filtrar por correo.</param>
+        /// <param name="id">Con esta opción puedes filtrar por id de usuario.</param>
         /// <returns>Un lista con las solicitudes.</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Solicitudes>>> GetSolicitudes(string? numSerie, string? correo)
+        public async Task<ActionResult<IEnumerable<Solicitudes>>> GetSolicitudes(string? numSerie, int? id)
         {
             List<Solicitudes> solicitudes;
 
 
-            if (numSerie == null && correo == null)
+            if (numSerie == null && id == null)
             {
                 if (numSerie != null)
                 {
                     solicitudes = _context.Solicitudes.Where(f => f.NumSerie == numSerie).ToList();
                 }
-                else if (correo != null)
+                else if (id != null)
                 {
-                    solicitudes = _context.Solicitudes.Where(x => x.IdUsuarioNavigation.Correo == correo).ToList();
+                    solicitudes = _context.Solicitudes.Where(x => x.IdUsuario == id).ToList();
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace ApiProyecto.Controllers
             else
             {
                 solicitudes = _context.Solicitudes.Where(f => f.NumSerie == numSerie).ToList();
-                solicitudes = solicitudes.Where(f => f. == numSerie);
+                solicitudes.Where(f => f.IdUsuario == id);
             }
             
 
