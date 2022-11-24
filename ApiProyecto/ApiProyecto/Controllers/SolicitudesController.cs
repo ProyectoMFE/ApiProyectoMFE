@@ -29,33 +29,33 @@ namespace ApiProyecto.Controllers
         /// Lista las solicitudes que hay en la base de datos.
         /// </summary>
         /// <param name="numSerie">Con esta opción puedes filtrar por número de serie.</param>
-        /// <param name="id">Con esta opción puedes filtrar por id de usuario.</param>
+        /// <param name="correo">Con esta opción puedes filtrar por id de usuario.</param>
         /// <returns>Un lista con las solicitudes.</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Solicitudes>>> GetSolicitudes(string? numSerie, int? id)
+        public async Task<ActionResult<IEnumerable<Solicitudes>>> GetSolicitudes(string? numSerie, string? correo)
         {
             List<Solicitudes> solicitudes;
+            //Usuarios user = _context.Usuarios.FirstOrDefault(f => f.Correo == correo);
 
-
-            if (numSerie == null && id == null)
+            if (numSerie != null && correo != null)
+            {
+                solicitudes = _context.Solicitudes.Where(f => f.NumSerie == numSerie).ToList();
+                solicitudes.Where(x => x.IdUsuarioNavigation.Correo == correo);
+            }
+            else
             {
                 if (numSerie != null)
                 {
                     solicitudes = _context.Solicitudes.Where(f => f.NumSerie == numSerie).ToList();
                 }
-                else if (id != null)
+                else if (correo != null)
                 {
-                    solicitudes = _context.Solicitudes.Where(x => x.IdUsuario == id).ToList();
+                    solicitudes = _context.Solicitudes.Where(x => x.IdUsuarioNavigation.Correo == correo).ToList();
                 }
                 else
                 {
                     return await _context.Solicitudes.ToListAsync();
                 }
-            }
-            else
-            {
-                solicitudes = _context.Solicitudes.Where(f => f.NumSerie == numSerie).ToList();
-                solicitudes.Where(f => f.IdUsuario == id);
             }
             
 
