@@ -36,17 +36,28 @@ namespace ApiProyecto.Controllers
         {
             List<Solicitudes> solicitudes;
 
-            if (numSerie != null)
+
+            if (numSerie == null && correo == null)
             {
-                solicitudes = _context.Solicitudes.Where(f => f.NumSerie == numSerie).ToList();
-            } else if (correo != null)
-            {
-                solicitudes = _context.Solicitudes.Where(x => x.IdUsuarioNavigation.Correo==correo).ToList();
+                if (numSerie != null)
+                {
+                    solicitudes = _context.Solicitudes.Where(f => f.NumSerie == numSerie).ToList();
+                }
+                else if (correo != null)
+                {
+                    solicitudes = _context.Solicitudes.Where(x => x.IdUsuarioNavigation.Correo == correo).ToList();
+                }
+                else
+                {
+                    return await _context.Solicitudes.ToListAsync();
+                }
             }
             else
             {
-                return await _context.Solicitudes.ToListAsync();
+                solicitudes = _context.Solicitudes.Where(f => f.NumSerie == numSerie).ToList();
+                solicitudes = solicitudes.Where(f => f. == numSerie);
             }
+            
 
             return solicitudes;
         }
