@@ -200,12 +200,12 @@ namespace ApiProyecto.DataAccess
                     .HasColumnName("ESTADO")
                     .IsFixedLength();
 
-                entity.HasOne(d => d.IdUsuarioNavigation)
+               entity.HasOne(d => d.IdUsuarioNavigation)
                     .WithMany(p => p.Solicitudes)
                     .HasForeignKey(d => d.IdUsuario)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("SOLICITUDES_fk1");
-
+              
                 entity.HasOne(d => d.NumSerieNavigation)
                     .WithMany(p => p.Solicitudes)
                     .HasForeignKey(d => d.NumSerie)

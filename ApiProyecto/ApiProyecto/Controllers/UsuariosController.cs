@@ -44,12 +44,9 @@ namespace ApiProyecto.Controllers
 
         // PUT: api/Usuarios/5
         [HttpPut("{correo}")]
-        public async Task<IActionResult> PutUsuarios(string correo, Usuarios usuarios)
+        public async Task<IActionResult> PutUsuarios(Usuarios usuarios)
         {
-            if (correo != usuarios.Correo)
-            {
-                return BadRequest();
-            }
+         
 
             _context.Entry(usuarios).State = EntityState.Modified;
 
@@ -78,6 +75,7 @@ namespace ApiProyecto.Controllers
         public async Task<ActionResult<Usuarios>> PostUsuarios(Usuarios usuarios)
         {
             _context.Usuarios.Add(usuarios);
+            
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUsuarios", new { id = usuarios.IdUsuario }, usuarios);

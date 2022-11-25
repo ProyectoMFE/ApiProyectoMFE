@@ -86,9 +86,9 @@ namespace ApiProyecto.Controllers
 
         // DELETE: api/Categorias/5
         [HttpDelete("{categoria}")]
-        public async Task<IActionResult> DeleteCategorias(string categoria)
+        public async Task<IActionResult> DeleteCategorias(int categoria)
         {
-            var categorias = _context.Categorias.FirstOrDefault(f => f.Nombre == categoria);
+            var categorias = _context.Categorias.FirstOrDefault(f => f.IdCategoria == categoria);
             if (categorias == null)
             {
                 return NotFound();

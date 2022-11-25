@@ -50,7 +50,8 @@ namespace ApiProyecto.Controllers
                 }
                 else if (correo != null)
                 {
-                    solicitudes = _context.Solicitudes.Where(x => x.IdUsuarioNavigation.Correo == correo).ToList();
+                     solicitudes = _context.Solicitudes.Where(x => x.IdUsuarioNavigation.Correo == correo).ToList();
+                   
                 }
                 else
                 {
@@ -163,7 +164,6 @@ namespace ApiProyecto.Controllers
             comando.Parameters.Add("@correo", System.Data.SqlDbType.VarChar, 30).Value = correo;
             comando.Parameters.Add("@num_dispositivo", System.Data.SqlDbType.VarChar, 20).Value = numSerie;
 
-            comando.ExecuteReader();
 
             try
             {
